@@ -4,7 +4,7 @@ import pandas as pd
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, inspect, func
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, redirect
 from dotenv import load_dotenv
 
 # Create Instance of Flask App
@@ -238,6 +238,19 @@ def recovered():
     return render_template("recovered.html")
 
 
+
+# Route that will trigger the scrape function
+@app.route("/scrape")
+def scrape():
+
+    # Import Scrape Function
+    import scrape
+
+    # Run the scrape function
+    scrape.scrape_info()
+
+    # Redirect back to home page
+    return redirect("/")
 
 
 if __name__ == "__main__":
